@@ -1,56 +1,113 @@
-# CodeSentry - AI驱动的代码安全审计 & Pwn 分析工具
+# CodeSentry - AI-driven Code Security Audit Tool
 
-## 核心功能
-- **C/C++ 代码静态分析** - 漏洞检测与验证
-- **CTF Pwn 分析** - 二进制漏洞利用模式识别
-- **ELF 二进制分析** - 安全保护机制检测 & ROP Gadget 发现
-- **AI 驱动的漏洞验证** - 低误报率的智能审计
+## Core Features
+- **Multi-language Static Analysis** - Supports C/C++, Python, Java, JavaScript, Go, PHP, Ruby, and more
+- **OWASP Top 10 Coverage** - Comprehensive coverage of Web application security risks
+- **Memory Safety Detection** - Buffer overflow, format string, integer overflow detection
+- **CI/CD Integration** - Easy to integrate into your development workflow
+
+## Supported Vulnerability Types
+
+### Code Injection
+- SQL Injection
+- Command Injection  
+- Code Injection
+- LDAP/XPath Injection
+- XSS (Cross-Site Scripting)
+- SSRF (Server-Side Request Forgery)
+- XXE (XML External Entity)
+
+### Memory Safety
+- Buffer Overflow
+- Stack Overflow
+- Format String
+- Integer Overflow/Underflow
+- Memory Leak
+
+### Cryptographic
+- Weak Encryption Algorithms
+- Hard-coded Credentials
+- Insecure SSL/TLS Configuration
+
+### Web Security
+- Path Traversal
+- Insecure Deserialization
+- Missing Authorization
+- Verbose Error Messages
 
 ## 支持的漏洞类型
 
+### 代码注入漏洞
+- SQL注入 (SQL Injection)
+- 命令注入 (Command Injection)
+- 代码注入 (Code Injection)
+- LDAP注入 (LDAP Injection)
+- XPath注入 (XPath Injection)
+
 ### 内存破坏漏洞
+- 缓冲区溢出 (Buffer Overflow)
 - 栈溢出 (Stack Overflow)
 - 堆溢出 (Heap Overflow)
 - Off-by-One
-- Use After Free
-- Double Free
-- 格式化字符串
+- 格式化字符串 (Format String)
+- 整数溢出/下溢 (Integer Overflow/Underflow)
 
-### 二进制安全
-- ROP/JOP/COP 利用模式
-- GOT 表劫持
-- ret2libc / ret2dlresolve
-- SROP (Sigreturn ROP)
+### 路径与文件安全
+- 路径遍历 (Path Traversal)
+- 敏感文件泄露
+- 任意文件读取/写入
+- 符号链接攻击
 
-### 条件竞争
-- TOCTOU 竞争
-- 条件竞争
+### Web安全
+- 跨站脚本 (XSS)
+- 跨站请求伪造 (CSRF)
+- 不安全的直接对象引用 (IDOR)
+- Server-Side Request Forgery (SSRF)
+- XML External Entity (XXE)
+
+### 认证与会话
+- 弱密码算法
+- 不安全的会话管理
+- 敏感信息泄露
+- 硬编码凭据
+
+### 加密与密钥
+- 弱加密算法
+- 不安全的随机数
+- 密钥硬编码
+- SSL/TLS配置问题
+
+### 逻辑漏洞
+- 业务逻辑缺陷
+- 访问控制绕过
+- 条件竞争 (Race Condition)
+- TOCTOU竞争条件
 
 ## 技术栈
 - Python 3.10+
-- 正则表达式引擎
-- ROPgadget / ropper (二进制分析)
-- checksec (保护机制检测)
+- 正则表达式引擎 + 数据流分析
+- AI大模型集成 (OpenAI, Claude, Gemini等)
+- 污点分析 (Taint Analysis)
 
 ## 项目结构
 
 ```
 CodeSentry/
 ├── core/                    # 核心分析引擎
-│   ├── analyzer.py         # 漏洞检测分析器
-│   ├── elf_analyzer.py      # ELF 二进制分析
-│   ├── pwn_analyzer.py     # CTF Pwn 模式分析
-│   └── models.py           # 数据结构定义
-├── rules/                   # 漏洞知识库
-│   └── pwn_knowledge.py    # CTF Pwn 技术百科
-├── ai/                      # AI 相关
+│   ├── analyzer.py         # 主分析器（含数据流分析）
+│   ├── models.py           # 数据结构定义
+│   └── taint_tracker.py    # 污点分析引擎
+├── rules/                   # 漏洞规则库
+│   ├── owasp_rules.py      # OWASP Top 10规则集
+│   ├── injection_rules.py   # 注入类规则
+│   └── memory_rules.py     # 内存安全规则
+├── ai/                      # AI相关
 │   ├── engine.py           # 大模型集成
-│   └── validator.py        # 漏洞验证器
+│   └── validator.py        # AI漏洞验证器
 ├── output/                  # 输出模块
 │   └── reporter.py         # 报告生成
-├── tests/                   # 测试用例
 ├── cli/                     # 命令行工具
-│   └── main.py             # CLI 入口
+│   └── main.py             # CLI入口
 ├── config/                  # 配置
 │   └── settings.py         # 配置文件
 ├── utils/                   # 工具函数
@@ -60,29 +117,86 @@ CodeSentry/
 ## 快速开始
 
 ```bash
+# 安装依赖
+pip install -r requirements.txt
+
 # 代码漏洞扫描
-python -m codesentry scan <目标目录>
+python -m codesentry scan <目标目录或文件>
 
-# 二进制安全分析
-python -m codesentry analyze-elf <二进制文件>
+# AI辅助验证
+python -m codesentry verify <漏洞ID>
 
-# Pwn 模式检测
-python -m codesentry pwn-scan <C代码文件>
+# 生成HTML报告
+python -m codesentry scan <目标> --format html --output report.html
 ```
 
-## CTF Pwn 技术支持
+## AI验证模式
 
-### 利用技术百科
-- Basic Stack Overflow → ROP
-- House of Spirit / Force / Einherjar / Lore
-- Use After Free / Double Free
-- Unsorted Bin Attack
-- Tcache Attack
-- Format String (Leak / Write)
-- SROP / ret2dlresolve
+CodeSentry集成AI大模型，可对扫描结果进行二次验证：
 
-### 保护机制检测
-- NX/DEP, Stack Canary, PIE, RELRO, FORTIFY_SOURCE, ASLR
+```bash
+# 启用AI验证
+python -m codesentry scan <目标> --ai-verify
+
+# 只使用AI验证（高精度模式）
+python -m codesentry scan <目标> --ai-only
+```
+
+## 支持的语言
+- C / C++
+- Python
+- Java
+- JavaScript / TypeScript
+- Go
+- PHP
+- Ruby
+- And more...
+
+## 配置
+
+通过 `config/settings.py` 或环境变量配置：
+
+```python
+# AI模型配置
+AI_MODEL = "gpt-4"  # 或 "claude-3-opus", "gemini-pro"
+AI_API_KEY = os.getenv("AI_API_KEY")
+
+# 分析配置
+ANALYSIS_DEPTH = "deep"  # "shallow" | "medium" | "deep"
+TAINT_TRACKING = True    # 启用污点分析
+```
+
+## 输出示例
+
+```
+🔒 CodeSentry 安全扫描报告
+==================================================
+📂 目标: /path/to/project
+📊 文件数: 150
+📝 代码行数: 45,230
+⏱️  扫描耗时: 12.34秒
+
+📈 漏洞统计:
+  🔴 Critical: 2
+  🟠 High: 5
+  🟡 Medium: 12
+  🟢 Low: 8
+
+🔍 AI验证结果: 误报率降低 85%
+```
+
+## 与CI/CD集成
+
+```yaml
+# GitHub Actions示例
+- name: CodeSentry Scan
+  run: |
+    pip install codesentry
+    codesentry scan . --ai-verify --format json > results.json
+```
 
 ## 许可证
-MIT
+MIT License
+
+## 贡献
+欢迎提交Issue和Pull Request！

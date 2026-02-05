@@ -38,6 +38,54 @@ class VulnerabilityType(Enum):
     UNINITIALIZED_MEMORY = "CWE-908"  # Use of Uninitialized Resource
     RACE_CONDITION = "CWE-362"  # Concurrent Execution Using Shared Resource with Improper Synchronization
 
+    # OWASP Top 10 2025 扩展
+    SQL_INJECTION = "CWE-89"  # SQL注入
+    COMMAND_INJECTION = "CWE-78"  # 命令注入
+    CODE_INJECTION = "CWE-94"  # 代码注入
+    LDAP_INJECTION = "CWE-90"  # LDAP注入
+    XPATH_INJECTION = "CWE-643"  # XPath注入
+    SSRF = "CWE-918"  # 服务端请求伪造
+    STACK_OVERFLOW = "CWE-121"  # 栈溢出
+    HEAP_OVERFLOW = "CWE-122"  # 堆溢出
+    OFF_BY_ONE = "CWE-193"  # Off-by-One
+    INTEGER_UNDERFLOW = "CWE-191"  # 整数下溢
+    DOUBLE_FREE = "CWE-415"  # 双重释放
+    UNAUTHORIZED_ACCESS = "CWE-284"  # 未授权访问
+    WEAK_PASSWORD = "CWE-328"  # 弱密码
+    SESSION_MANAGEMENT = "CWE-384"  # 会话管理问题
+    PRIVILEGE_ESCALATION = "CWE-269"  # 权限提升
+    SENSITIVE_DATA_EXPOSURE = "CWE-200"  # 敏感信息泄露
+    CRYPTO_FAILURES = "CWE-310"  # 加密失败
+    WEAK_ENCRYPTION = "CWE-328"  # 弱加密
+    HARD_CODED_CREDENTIAL = "CWE-798"  # 硬编码凭据
+    INSECURE_RANDOM = "CWE-338"  # 弱随机数
+    PATH_TRAVERSAL = "CWE-22"  # 路径遍历
+    ARBITRARY_FILE_READ = "CWE-22"  # 任意文件读取
+    ARBITRARY_FILE_WRITE = "CWE-22"  # 任意文件写入
+    CSRF = "CWE-352"  # 跨站请求伪造
+    IDOR = "CWE-639"  # 不安全直接对象引用
+    VULNERABLE_DEPENDENCY = "CWE-1104"  # 漏洞依赖
+    TOCTOU = "CWE-367"  # TOCTOU竞争条件
+    INSECURE_DESIGN = "CWE-693"  # 不安全设计
+    INSECURE_SSL = "CWE-295"  # SSL配置问题
+    MISSING_RATE_LIMIT = "CWE-307"  # 缺少速率限制
+    MEMORY_LEAK = "CWE-401"  # 内存泄漏
+    LOGGING_ISSUES = "CWE-778"  # 日志问题
+    BRUTE_FORCE = "CWE-307"  # 暴力破解
+    SENSITIVE_DATA_LOGGING = "CWE-532"  # 敏感数据日志
+    WEAK_AUTHENTICATION = "CWE-287"  # 弱认证
+    
+    # 二进制安全相关
+    GOT_HIJACK = "CWE-829"  # GOT表劫持
+    VTABLE_HIJACK = "CWE-829"  # VTable劫持
+    FUNCTION_POINTER = "CWE-754"  # 函数指针危险使用
+    ROP_GADGET = "CWE-94"  # ROP Gadget
+    RET2LIBC = "CWE-94"  # Ret2libc
+    UNINITIALIZED_POINTER = "CWE-457"  # 未初始化指针
+    DANGLING_POINTER = "CWE-822"  # 悬空指针
+    
+    UNKNOWN = "CWE-0"  # 未知
+
 
 @dataclass
 class Location:
